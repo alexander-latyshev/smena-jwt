@@ -7,6 +7,12 @@ module.exports = {
   entry: "./src/index.tsx",
   devServer: {
     port: 5000,
+    static: "./dist/",
+    hot: true,
+    devMiddleware: {
+      publicPath: "/dist/",
+      writeToDisk: true,
+    },
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
@@ -32,8 +38,12 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        exclude: /node_modules/,
-        loader: "ts-loader",
+        loader: "babel-loader",
+      },
+      {
+        test: /\.js$/,
+        use: ["source-map-loader"],
+        enforce: "pre",
       },
     ],
   },
