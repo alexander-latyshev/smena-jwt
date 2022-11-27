@@ -5,6 +5,7 @@ const path = require("path");
 module.exports = {
   mode: "development",
   entry: "./src/index.tsx",
+  devtool: "inline-source-map",
   devServer: {
     port: 5000,
     static: "./dist/",
