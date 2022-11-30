@@ -10,6 +10,7 @@ module.exports = {
     port: 5000,
     static: "./dist/",
     hot: true,
+    historyApiFallback: true,
     devMiddleware: {
       publicPath: "/dist/",
       writeToDisk: true,

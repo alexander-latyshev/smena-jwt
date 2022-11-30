@@ -1,14 +1,12 @@
 import React from "react";
+import "./App.css";
+import Main from "./components/main";
 
-type Props = {};
-
-const App = (props: Props) => {
-  console.log(123);
-
+const App: React.FC = () => {
   return (
-    <div>
-      <h1>App</h1>
-    </div>
+    <>
+      <Main />
+    </>
   );
 };
 
