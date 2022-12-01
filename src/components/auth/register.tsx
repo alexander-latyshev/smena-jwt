@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Alert, Button, Form, Input } from "antd";
-import { useAppDispatch } from "../../redux/hooks";
-import { getRegisterPage } from "../../redux/reducer";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getRegisterPage, RegistrationMessage } from "../../redux/reducer";
 import { Link } from "react-router-dom";
 
 type Props = {};
 
 const Register = (props: Props) => {
   const dispatch = useAppDispatch();
+  const regMessage: RegistrationMessage | null = useAppSelector(
+    (state) => state.store.registrationMessage
+  );
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
@@ -21,13 +24,19 @@ const Register = (props: Props) => {
     password: "",
   });
 
+  const isResponse: string | null = regMessage
+    ? regMessage.error || regMessage.message
+    : null;
+
   return (
     <>
-      {/* <Alert
-        message={regMessage.message || regMessage.error}
-        type={regMessage.error ? "error" : "success"}
-        style={{ width: 400, margin: "auto" }}
-      /> */}
+      {isResponse ? (
+        <Alert
+          message={regMessage.message || regMessage.error}
+          type={regMessage.error ? "error" : "success"}
+          style={{ width: 450, marginTop: 50 }}
+        />
+      ) : null}
       <Form
         name="basic"
         labelCol={{ span: 8 }}
@@ -36,7 +45,7 @@ const Register = (props: Props) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-        style={{ marginTop: 50, width: 800 }}
+        style={{ marginTop: 20, width: 800 }}
       >
         <Form.Item
           label="Username"

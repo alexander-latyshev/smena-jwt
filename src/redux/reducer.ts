@@ -10,7 +10,7 @@ interface ActionRequest {
   };
 }
 
-interface RegistrationMessage {
+export interface RegistrationMessage {
   message?: string;
   error?: string;
 }
@@ -30,7 +30,7 @@ export type UserProfile = {
 };
 
 interface InitialState {
-  registrationMessage: string | null;
+  registrationMessage: RegistrationMessage;
   users: Array<any>;
   userProfile: UserProfile | {};
 }
@@ -105,13 +105,13 @@ export const storeSlice = createSlice({
         if (action.payload.error) {
           return {
             ...state,
-            registrationMessage: action.payload.error,
+            registrationMessage: action.payload,
           };
         }
 
         return {
           ...state,
-          registrationMessage: action.payload.message,
+          registrationMessage: action.payload,
           users: [...state.users, action.meta.arg],
         };
       })
