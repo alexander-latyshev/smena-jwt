@@ -13,7 +13,6 @@ const Main = (props: Props) => {
 
   useEffect(() => {
     if (pathname === "/") navigate("/register");
-    console.log(1);
   }, [pathname]);
 
   return (
