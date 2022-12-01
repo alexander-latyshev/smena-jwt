@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { getLoginPage } from "../../redux/reducer";
 
 type Props = {};
+interface LoginField {
+  username: string;
+  password: string;
+}
 
 const Login = (props: Props) => {
+  const dispatch = useAppDispatch();
+
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
+
+  const [loginField, setLoginField] = useState({
+    username: "",
+    password: "",
+  });
+  console.log(loginField);
 
   return (
     <Form
@@ -25,6 +39,12 @@ const Login = (props: Props) => {
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Username"
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setLoginField({
+              ...loginField,
+              username: e.target.value,
+            })
+          }
         />
       </Form.Item>
       <Form.Item
@@ -35,11 +55,22 @@ const Login = (props: Props) => {
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Password"
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setLoginField({
+              ...loginField,
+              password: e.target.value,
+            })
+          }
         />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="login-form-button"
+          onClick={() => dispatch(getLoginPage(loginField))}
+        >
           Log in
         </Button>
         Or <Link to={"/register"}>register now!</Link>
