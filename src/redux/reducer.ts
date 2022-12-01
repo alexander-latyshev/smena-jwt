@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { create } from "domain";
 
 interface ActionRequest {
   type: string;
@@ -9,11 +8,6 @@ interface ActionRequest {
     requestId: string;
     requestStatus: string;
   };
-}
-
-interface InitialState {
-  registrationMessage: string | null;
-  users: Array<any>;
 }
 
 interface RegistrationMessage {
@@ -31,9 +25,20 @@ type User = {
   password: string;
 };
 
+export type UserProfile = {
+  [key: string]: string | number;
+};
+
+interface InitialState {
+  registrationMessage: string | null;
+  users: Array<any>;
+  userProfile: UserProfile | {};
+}
+
 const initialState: InitialState = {
   registrationMessage: null,
   users: [],
+  userProfile: {},
 };
 
 export const getRegisterPage = createAsyncThunk<RegistrationMessage, User>(
@@ -72,19 +77,19 @@ export const getLoginPage = createAsyncThunk<TokenRequest, User>(
   }
 );
 
-// export const getAboutPage = createAsyncThunk("about", async (user: User) => {
-//   const url = "http://localhost:8080/about";
-//   const token = localStorage.getItem("token");
-//   const res = await fetch(url, {
-//     method: "GET",
-//     headers: {
-//       Authorization: "Bearer " + token,
-//     },
-//   });
+export const getAboutPage = createAsyncThunk("about", async () => {
+  const url = "http://localhost:8080/about";
+  const token = localStorage.getItem("token");
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
 
-//   const result = await res.json();
-//   return result;
-// });
+  const result = await res.json();
+  return result;
+});
 
 export const storeSlice = createSlice({
   name: "store",
@@ -96,9 +101,6 @@ export const storeSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getLoginPage.fulfilled, (state) => {
-        return state;
-      })
       .addCase(getRegisterPage.fulfilled, (state, action: ActionRequest) => {
         if (action.payload.error) {
           return {
@@ -111,6 +113,17 @@ export const storeSlice = createSlice({
           ...state,
           registrationMessage: action.payload.message,
           users: [...state.users, action.meta.arg],
+        };
+      })
+      .addCase(getLoginPage.fulfilled, (state) => {
+        return state;
+      })
+      .addCase(getAboutPage.fulfilled, (state, action: ActionRequest) => {
+        console.log(action);
+
+        return {
+          ...state,
+          userProfile: { ...action.payload.data },
         };
       });
   },

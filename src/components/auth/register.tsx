@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Button, Form, Input } from "antd";
 import { useAppDispatch } from "../../redux/hooks";
 import { getRegisterPage } from "../../redux/reducer";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -75,6 +76,7 @@ const Register = (props: Props) => {
           >
             Submit
           </Button>
+          Or <Link to={"/login"}>Login!</Link>
         </Form.Item>
       </Form>
     </>

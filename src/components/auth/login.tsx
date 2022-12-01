@@ -22,7 +22,6 @@ const Login = (props: Props) => {
     username: "",
     password: "",
   });
-  console.log(loginField);
 
   return (
     <Form
@@ -65,14 +64,16 @@ const Login = (props: Props) => {
       </Form.Item>
 
       <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="login-form-button"
-          onClick={() => dispatch(getLoginPage(loginField))}
-        >
-          Log in
-        </Button>
+        <Link to={"/about"}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+            onClick={() => dispatch(getLoginPage(loginField))}
+          >
+            Log in
+          </Button>
+        </Link>
         Or <Link to={"/register"}>register now!</Link>
       </Form.Item>
     </Form>
