@@ -29,7 +29,7 @@ const Login = (props: Props) => {
       className="login-form"
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      style={{ marginTop: 50, width: 400 }}
+      style={{ marginTop: 20, width: 350 }}
     >
       <Form.Item
         name="username"
