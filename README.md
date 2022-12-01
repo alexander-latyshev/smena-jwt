@@ -13,7 +13,7 @@
 3. Install dependencies `npm install`
 4. Run server `node app.js`
 
-### Technologies used
+## Technologies used
 
 - React (functional components)
 - Redux
