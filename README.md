@@ -16,7 +16,7 @@
 ## Technologies used
 
 - React (functional components)
-- Redux
+- Redux Toolkit
 - Webpack
 - Typescript
 - BEM (CSS naming convention)
